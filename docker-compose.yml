@@ -1,0 +1,38 @@
+services:
+  opencode:
+    image: ghcr.io/anomalyco/opencode:2.0.27
+    container_name: opencode
+    command: serve --hostname 0.0.0.0 --port 4096
+    volumes:
+      # !!! Добавляем путь до нужного проекта !!!
+#      - /path/to/project:/workspace
+      - opencode-config:/root/.config/opencode
+      - ./opencode.json:/root/.config/opencode/opencode.json:ro
+    working_dir: /workspace
+    tty: true
+    stdin_open: true
+    # Убираем ports — прокси будет пробрасывать
+    networks:
+      - isolated_network  # Только внутренняя сеть, без доступа к хосту
+
+  proxy:
+    image: nginx:alpine
+    container_name: opencode-proxy
+    restart: unless-stopped
+    ports:
+      - "4096:4096"  # Пробрасываем только UI на хост
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - isolated_network  # Для связи с opencode
+      - host_network      # Для доступа к хосту (LM Studio)
+
+volumes:
+  opencode-config:
+
+networks:
+  isolated_network:
+    driver: bridge
+    internal: true  # Блокирует интернет для opencode
+  host_network:
+    driver: bridge  # Обычная сеть с доступом к хосту

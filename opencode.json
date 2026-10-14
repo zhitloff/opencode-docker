@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "lmstudio": {
+      "name": "LMStudio",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://proxy:1234/v1"
+      },
+      "models": {
+      }
+    }
+  },
+  "permissions": [
+    {
+      "action": "read",
+      "resource": "**/.env*",
+      "effect": "deny"
+    }
+  ]
+}
