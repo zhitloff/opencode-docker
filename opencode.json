@@ -9,12 +9,48 @@
       },
       "models": {
       }
+    },
+    "odirouter": {
+      "name": "ODIRouter",
+      "env": ["ODIROUTER_API_KEY"],
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://proxy:1235/v1"
+      },
+      "models": {
+        "gemini-3.7-flash": {
+          "name": "gemini-3.7-flash"
+        },
+        "deepseek-v4-flash": {
+          "name": "deepseek-v4-flash"
+        }
+      }
     }
   },
   "permissions": [
     {
       "action": "read",
       "resource": "**/.env*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/.git/**",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/.*/**",
+      "effect": "deny"
+    },
+    {
+      "action": "grep",
+      "resource": "**/.git/**",
+      "effect": "deny"
+    },
+    {
+      "action": "grep",
+      "resource": "**/.*/**",
       "effect": "deny"
     }
   ]

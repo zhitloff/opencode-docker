@@ -3,6 +3,8 @@ services:
     image: ghcr.io/anomalyco/opencode:2.0.28
     container_name: opencode
     command: serve --hostname 0.0.0.0 --port 4096
+    environment:
+      - ODIROUTER_API_KEY=${ODIROUTER_API_KEY}
     volumes:
       # !!! Добавляем путь до нужного проекта !!!
 #      - /path/to/project:/workspace
